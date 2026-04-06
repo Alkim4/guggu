@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Guggu ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#00b4d8;
+  --blue2:#0077b6;
+  --cyan:#90e0ef;
+  --white:#caf0f8;
+  --gold:#ffd60a;
+  --dark:#020c14;
+  --dark2:#041220;
+  --glow:rgba(0,180,216,0.55);
+  --purple:#7b2fff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--white);font-family:'Cinzel',serif;overflow-x:hidden;cursor:none}
+
+/* CUSTOM CURSOR */
+#cursor{position:fixed;width:22px;height:22px;border-radius:50%;border:2px solid var(--cyan);pointer-events:none;z-index:9999;box-shadow:0 0 12px var(--blue),0 0 24px var(--blue);transform:translate(-50%,-50%);transition:left 0.04s,top 0.04s,transform 0.2s}
+#cursor-dot{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--cyan);pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+
+/* LIVE BACKGROUND CANVAS */
+#liveBg{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* PARTICLES */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:var(--cyan);animation:twinkle linear infinite}
+@keyframes twinkle{0%{opacity:0;transform:scale(0)}50%{opacity:1}100%{opacity:0;transform:scale(1.5)}}
+
+/* MUSIC BTN */
+#musicBtn{position:fixed;bottom:22px;right:22px;z-index:999;width:50px;height:50px;border-radius:50%;border:2px solid var(--blue);background:rgba(2,12,20,0.9);color:var(--cyan);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all 0.3s;box-shadow:0 0 20px var(--glow)}
+#musicBtn:hover{background:var(--blue2);color:#fff;transform:scale(1.12)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:40px 20px;text-align:center;overflow:hidden}
+.hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(2,12,20,0.55) 0%,rgba(0,30,60,0.3) 40%,rgba(2,12,20,0.98) 100%)}
+/* Gojo image panel on right side for desktop */
+.gojo-hero-img{
+  position:absolute;right:0;top:0;bottom:0;width:55%;z-index:1;
+  background:url('https://i.pinimg.com/originals/6b/25/4d/6b254d85c9ce5a3d6f5e6e86327c8a12.jpg') center top / cover no-repeat;
+  mask-image:linear-gradient(to left,rgba(0,0,0,0.9) 40%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to left,rgba(0,0,0,0.9) 40%,transparent 100%);
+  filter:brightness(0.75) saturate(1.4);
+}
+.scan-line{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:scan 5s linear infinite;opacity:0.2;z-index:3}
+.scan-line:nth-child(2){animation-delay:2.5s}
+@keyframes scan{0%{top:-2px}100%{top:100%}}
+.hero-content{position:relative;z-index:4}
+.hero-eyebrow{font-family:'Noto Serif JP',serif;font-weight:300;font-size:clamp(0.65rem,2.5vw,0.85rem);letter-spacing:8px;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;animation:fadeUp 1s ease both}
+.hero-name{font-family:'Cinzel Decorative',cursive;font-size:clamp(3.5rem,14vw,8rem);font-weight:900;background:linear-gradient(135deg,var(--white) 0%,var(--cyan) 40%,var(--blue) 70%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;animation:fadeUp 1s 0.3s ease both;opacity:0;filter:drop-shadow(0 0 30px rgba(0,180,216,0.6))}
+.hero-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(1.2rem,4.5vw,2.5rem);color:var(--white);margin-top:14px;animation:fadeUp 1s 0.6s ease both;opacity:0;letter-spacing:4px}
+.hero-sub{font-family:'Noto Serif JP',serif;font-weight:300;font-size:clamp(0.8rem,2.2vw,1rem);color:rgba(144,224,239,0.75);margin-top:10px;letter-spacing:3px;animation:fadeUp 1s 0.9s ease both;opacity:0}
+/* Infinity rings */
+.infinity-ring{position:relative;width:min(240px,60vw);height:min(240px,60vw);margin:32px auto 24px;animation:fadeUp 1s 0.15s ease both;opacity:0}
+.ring-outer{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(0,180,216,0.45);box-shadow:0 0 40px rgba(0,180,216,0.3),inset 0 0 30px rgba(0,180,216,0.08);animation:spin 18s linear infinite}
+.ring-mid{position:absolute;inset:16px;border-radius:50%;border:1px solid rgba(0,180,216,0.25);animation:spin 12s linear infinite reverse}
+.ring-inner{position:absolute;inset:32px;border-radius:50%;border:1px solid rgba(144,224,239,0.18);animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.photo-frame{position:absolute;inset:48px;border-radius:50%;overflow:hidden;border:3px solid rgba(0,180,216,0.6);box-shadow:0 0 60px rgba(0,180,216,0.45),0 0 120px rgba(0,180,216,0.15)}
+.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:50% 15%;display:block}
+.photo-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(2,12,20,0.5) 100%)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:rgba(144,224,239,0.35);font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;animation:bounce 2.5s ease-in-out infinite;z-index:4}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* DIVIDER */
+.jjk-div{display:flex;align-items:center;justify-content:center;gap:16px;padding:18px;background:rgba(2,12,20,0.95);position:relative;z-index:5}
+.jjk-div span{flex:1;max-width:100px;height:1px}
+.jjk-div span:first-child{background:linear-gradient(90deg,transparent,var(--blue))}
+.jjk-div span:last-child{background:linear-gradient(90deg,var(--blue),transparent)}
+.jjk-div em{color:var(--cyan);font-style:normal;font-size:0.8rem;letter-spacing:4px;white-space:nowrap}
+
+/* SECTION BASE */
+.sec{padding:80px 20px;position:relative;overflow:hidden;text-align:center;z-index:5;background:rgba(2,12,20,0.92)}
+.sec-lbl{font-family:'Noto Serif JP',serif;font-weight:300;font-size:0.68rem;letter-spacing:8px;color:var(--blue);text-transform:uppercase;margin-bottom:6px}
+.sec-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(1.7rem,7vw,3rem);background:linear-gradient(135deg,var(--white),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.sec-sub{font-family:'Noto Serif JP',serif;color:rgba(144,224,239,0.45);font-size:0.82rem;letter-spacing:2px;margin-bottom:46px}
+
+/* GOJO SPOTLIGHT — full-width image section */
+#gojo-spotlight{
+  position:relative;z-index:5;min-height:70vh;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;padding:0;
+}
+.gojo-full-img{
+  position:absolute;inset:0;
+  background:url('https://i.pinimg.com/originals/dc/73/32/dc7332fb1a7fc7bb88c6fd8cf7eb39fd.jpg') center top / cover no-repeat;
+  filter:brightness(0.6) saturate(1.5);
+}
+.gojo-full-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(2,12,20,0.0) 40%,rgba(2,12,20,0.97) 100%)}
+.gojo-spotlight-text{position:relative;z-index:2;max-width:360px;padding:60px 40px 60px 20px;text-align:right}
+.gojo-tag{font-family:'Noto Serif JP',serif;font-size:0.65rem;letter-spacing:8px;color:var(--blue);text-transform:uppercase;margin-bottom:12px}
+.gojo-quote{font-family:'Cinzel Decorative',cursive;font-size:clamp(1.4rem,4vw,2.2rem);color:var(--white);line-height:1.35;margin-bottom:18px}
+.gojo-attr{font-family:'Noto Serif JP',serif;font-size:0.75rem;letter-spacing:4px;color:rgba(144,224,239,0.5);font-style:italic}
+
+/* GALLERY */
+#gallery{background:rgba(4,18,32,0.95);z-index:5}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:720px;margin:0 auto}
+.gal-cell{position:relative;overflow:hidden;aspect-ratio:2/3;cursor:pointer;border:1px solid rgba(0,180,216,0.08);transition:box-shadow 0.4s}
+.gal-cell img,.gal-cell video{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(0.6) saturate(1.3);transition:all 0.5s;display:block}
+.gal-cell:hover img,.gal-cell:hover video{filter:brightness(1) saturate(1.8);transform:scale(1.07)}
+.gal-cell:hover{box-shadow:0 0 18px rgba(0,180,216,0.5),0 0 40px rgba(0,180,216,0.15)}
+.gal-cell::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(2,12,20,0.9) 100%);pointer-events:none}
+.gal-lbl{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:0.58rem;letter-spacing:3px;text-transform:uppercase;color:rgba(144,224,239,0.8);z-index:2;font-family:'Noto Serif JP',serif}
+.gal-cell.big{grid-column:1/3;aspect-ratio:3/2}
+.gal-cell.big video,.gal-cell.big img{object-position:center 20%}
+.gal-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;transition:opacity 0.3s}
+.gal-play svg{width:42px;height:42px;filter:drop-shadow(0 0 10px rgba(0,180,216,0.9));opacity:0.8}
+.gal-cell.vid-playing .gal-play{opacity:0}
+.gal-cell.vid-playing:hover .gal-play{opacity:0.6}
+
+/* COUNTDOWN */
+#countdown{background:rgba(2,12,20,0.95);z-index:5}
+.cd-grid{display:flex;gap:clamp(10px,3vw,22px);justify-content:center;flex-wrap:wrap;margin-top:8px}
+.cd-box{position:relative;background:rgba(0,180,216,0.05);border:1px solid rgba(0,180,216,0.18);border-radius:4px;padding:clamp(14px,4vw,24px) clamp(14px,5vw,34px);min-width:clamp(58px,15vw,90px);overflow:hidden}
+.cd-box::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.cd-num{font-size:clamp(2rem,8vw,3.2rem);font-weight:700;color:var(--cyan);line-height:1;display:block;font-family:'Cinzel Decorative',cursive}
+.cd-lbl{font-size:0.58rem;letter-spacing:4px;text-transform:uppercase;color:rgba(144,224,239,0.38);margin-top:5px;font-family:'Noto Serif JP',serif}
+.cd-note{color:rgba(144,224,239,0.38);font-size:0.78rem;margin-top:22px;font-family:'Noto Serif JP',serif;letter-spacing:2px;font-style:italic}
+
+/* MESSAGE */
+#message{background:rgba(4,18,32,0.95);z-index:5}
+.msg-inner{max-width:700px;margin:0 auto;position:relative}
+.msg-card{position:relative;z-index:2;border:1px solid rgba(0,180,216,0.14);border-radius:12px;padding:clamp(28px,6vw,58px);background:rgba(2,12,20,0.85);backdrop-filter:blur(12px)}
+.msg-card::before{content:'"';position:absolute;top:-10px;left:20px;font-size:90px;color:rgba(0,180,216,0.07);font-family:Georgia,serif;line-height:1;pointer-events:none}
+.msg-text{font-family:'Noto Serif JP',serif;font-weight:300;font-size:clamp(0.95rem,3vw,1.2rem);line-height:2.1;color:rgba(202,240,248,0.9);text-align:left;white-space:pre-line;min-height:80px}
+.msg-sig{margin-top:28px;font-family:'Cinzel Decorative',cursive;font-size:clamp(1rem,3.5vw,1.4rem);color:var(--cyan);text-align:center}
+.msg-cursor{display:inline-block;width:2px;height:1.1em;background:var(--cyan);animation:blink 0.8s step-end infinite;vertical-align:text-bottom}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* WISHES */
+#domain{background:rgba(2,12,20,0.95);z-index:5}
+.wish-grid{max-width:720px;margin:0 auto;display:grid;gap:14px}
+.wish-card{display:flex;gap:18px;align-items:flex-start;background:rgba(0,180,216,0.03);border:1px solid rgba(0,180,216,0.1);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:clamp(16px,4vw,26px);text-align:left;transform:translateX(-30px);opacity:0;transition:all 0.6s ease}
+.wish-card.visible{transform:translateX(0);opacity:1}
+.wish-num{font-family:'Cinzel Decorative',cursive;font-size:1.8rem;color:rgba(0,180,216,0.28);line-height:1;min-width:38px}
+.wish-title{font-family:'Cinzel',serif;font-size:clamp(0.9rem,2.5vw,1.1rem);color:var(--cyan);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.wish-text{font-family:'Noto Serif JP',serif;font-weight:300;font-size:clamp(0.85rem,2.2vw,0.95rem);color:rgba(202,240,248,0.7);line-height:1.9}
+
+/* SURPRISE */
+#surprise{background:rgba(4,18,32,0.96);z-index:5}
+.surp-prev{position:relative;max-width:520px;margin:0 auto;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid rgba(0,180,216,0.18)}
+.surp-prev img{width:100%;height:340px;object-fit:cover;object-position:center top;filter:blur(6px) brightness(0.4);transition:filter 0.4s;display:block}
+.surp-prev:hover img{filter:blur(3px) brightness(0.55)}
+.surp-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.surp-ov-txt{font-family:'Cinzel Decorative',cursive;font-size:clamp(1.2rem,4vw,1.8rem);color:var(--white);text-shadow:0 0 30px var(--blue);letter-spacing:3px}
+.surp-ov-sub{font-family:'Noto Serif JP',serif;font-size:0.7rem;letter-spacing:5px;color:var(--cyan);text-transform:uppercase}
+.surp-btn{margin-top:28px;font-family:'Cinzel',serif;color:var(--cyan);font-size:0.85rem;letter-spacing:6px;text-transform:uppercase;border:1px solid rgba(0,180,216,0.5);padding:14px 40px;background:rgba(0,180,216,0.06);cursor:pointer;border-radius:3px;transition:all 0.3s;box-shadow:0 0 20px rgba(0,180,216,0.1)}
+.surp-btn:hover{background:rgba(0,180,216,0.18);box-shadow:0 0 40px rgba(0,180,216,0.3)}
+
+/* FINAL */
+#final{position:relative;padding:100px 20px 120px;text-align:center;overflow:hidden;z-index:5;background:rgba(2,12,20,0.97)}
+.final-bg{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,100,180,0.12) 0%,transparent 70%)}
+.final-sym{font-size:5rem;color:var(--blue);animation:glowPulse 2.5s ease-in-out infinite;margin-bottom:10px;filter:drop-shadow(0 0 20px rgba(0,180,216,0.7))}
+@keyframes glowPulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.corner{position:absolute;width:40px;height:40px;border-color:rgba(0,180,216,0.35);border-style:solid}
+.corner.tl{top:20px;left:20px;border-width:1px 0 0 1px}
+.corner.tr{top:20px;right:20px;border-width:1px 1px 0 0}
+.corner.bl{bottom:20px;left:20px;border-width:0 0 1px 1px}
+.corner.br{bottom:20px;right:20px;border-width:0 1px 1px 0}
+.final-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(2.5rem,10vw,5rem);background:linear-gradient(135deg,var(--white),var(--cyan),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:18px;line-height:1.1}
+.final-msg{font-family:'Noto Serif JP',serif;font-weight:300;font-size:clamp(0.9rem,2.5vw,1.1rem);color:rgba(144,224,239,0.55);line-height:2;max-width:550px;margin:0 auto 28px}
+.final-sig{font-family:'Cinzel Decorative',cursive;font-size:clamp(1.4rem,5vw,2.2rem);color:var(--cyan);letter-spacing:8px}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+
+<video id="liveBg" autoplay muted loop playsinline
+  style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.45;pointer-events:none">
+  <source src="gojo.mp4" type="video/mp4">
+</video>
+
+<audio id="bgm" loop>
+  <source src="gojo1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- MUSIC BTN -->
+<button id="musicBtn">♪</button>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="gojo-hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="scan-line"></div>
+  <div class="scan-line" style="animation-delay:2.5s"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">呪術廻戦 &nbsp;·&nbsp; JUJUTSU KAISEN &nbsp;·&nbsp; ∞</div>
+    <div class="infinity-ring">
+      <div class="ring-outer"></div>
+      <div class="ring-mid"></div>
+      <div class="ring-inner"></div>
+      <div class="photo-frame">
+        <img src="guggu.jpg" alt="Gojo">
+      </div>
+    </div>
+    <div class="hero-name">Guggu</div>
+    <div class="hero-title">✦ Happy Birthday ✦</div>
+    <div class="hero-sub">∞ Throughout Heaven and Earth — Only You ∞</div>
+  </div>
+  <div class="scroll-hint">↓ &nbsp; Scroll &nbsp; ↓</div>
+</section>
+
+<div class="jjk-div"><span></span><em>✦ 呪術廻戦 ✦</em><span></span></div>
+
+<!-- GOJO SPOTLIGHT -->
+<section id="gojo-spotlight">
+  <div class="gojo-full-img"></div>
+  <div class="gojo-full-overlay"></div>
+  <div class="gojo-spotlight-text">
+    <div class="gojo-tag">The Honored One</div>
+    <div class="gojo-quote">"Throughout Heaven and Earth, I Alone Am The Honored One."</div>
+    <div class="gojo-attr">— Gojo Satoru, The Strongest</div>
+  </div>
+</section>
+
+<div class="jjk-div"><span></span><em>✦ ∞ ✦</em><span></span></div>
+
+<!-- GALLERY -->
+<section id="gallery" class="sec">
+  <div class="sec-lbl">Cast of Curses</div>
+  <div class="sec-title">The Jujutsu World</div>
+  <div class="sec-sub">— sorcerers & spirits —</div>
+  <div class="gal-grid">
+
+    <div class="gal-cell big" data-vid="gojoVid">
+      <video id="gojoVid" src="gojoo.mp4" playsinline preload="metadata" loop></video>
+      <div class="gal-play"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="38" fill="rgba(0,0,0,0.45)" stroke="rgba(0,180,216,0.7)" stroke-width="1.5"/><polygon points="32,22 62,40 32,58" fill="rgba(0,180,216,0.95)"/></svg></div>
+      <div class="gal-lbl">Gojo Satoru</div>
+    </div>
+
+    <div class="gal-cell" data-vid="itadoriVid">
+      <video id="itadoriVid" src="itadori.mp4" playsinline preload="metadata" loop></video>
+      <div class="gal-play"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="38" fill="rgba(0,0,0,0.45)" stroke="rgba(0,180,216,0.7)" stroke-width="1.5"/><polygon points="32,22 62,40 32,58" fill="rgba(0,180,216,0.95)"/></svg></div>
+      <div class="gal-lbl">Itadori Yuji</div>
+    </div>
+
+    <div class="gal-cell" data-vid="fushiguroVid">
+      <video id="fushiguroVid" src="fushiguro.mp4" playsinline preload="metadata" loop></video>
+      <div class="gal-play"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="38" fill="rgba(0,0,0,0.45)" stroke="rgba(0,180,216,0.7)" stroke-width="1.5"/><polygon points="32,22 62,40 32,58" fill="rgba(0,180,216,0.95)"/></svg></div>
+      <div class="gal-lbl">Fushiguro</div>
+    </div>
+
+    <div class="gal-cell" data-vid="nobaraVid">
+      <video id="nobaraVid" src="nobara.mp4" playsinline preload="metadata" loop></video>
+      <div class="gal-play"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="38" fill="rgba(0,0,0,0.45)" stroke="rgba(0,180,216,0.7)" stroke-width="1.5"/><polygon points="32,22 62,40 32,58" fill="rgba(0,180,216,0.95)"/></svg></div>
+      <div class="gal-lbl">Nobara</div>
+    </div>
+
+    <div class="gal-cell" data-vid="sukunaVid">
+      <video id="sukunaVid" src="sukuna.mp4" playsinline preload="metadata" loop></video>
+      <div class="gal-play"><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="38" fill="rgba(0,0,0,0.45)" stroke="rgba(0,180,216,0.7)" stroke-width="1.5"/><polygon points="32,22 62,40 32,58" fill="rgba(0,180,216,0.95)"/></svg></div>
+      <div class="gal-lbl">Sukuna</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="jjk-div"><span></span><em>✦ 呪術廻戦 ✦</em><span></span></div>
+
+<!-- COUNTDOWN -->
+<section id="countdown" class="sec">
+  <div class="sec-lbl">Time Since Arrival</div>
+  <div class="sec-title">The Countdown</div>
+  <div class="sec-sub">— marked in cursed energy —</div>
+  <div class="cd-grid" id="cdGrid"></div>
+  <div class="cd-note" id="cdNote"></div>
+</section>
+
+<div class="jjk-div"><span></span><em>✦ ∞ ✦</em><span></span></div>
+
+<!-- MESSAGE -->
+<section id="message" class="sec">
+  <div class="sec-lbl">Six Eyes Transmission</div>
+  <div class="sec-title">A Letter</div>
+  <div class="sec-sub">— written with cursed energy & love —</div>
+  <div class="msg-inner">
+    <div class="msg-card">
+      <div class="msg-text" id="typedMsg"><span class="msg-cursor"></span></div>
+      <div class="msg-sig" id="msgSig" style="opacity:0">— With cursed energy &amp; love ✦</div>
+    </div>
+  </div>
+</section>
+
+<div class="jjk-div"><span></span><em>✦ 呪術廻戦 ✦</em><span></span></div>
+
+<!-- DOMAIN EXPANSION WISHES -->
+<section id="domain" class="sec">
+  <div style="font-family:'Noto Serif JP',serif;font-size:0.6rem;letter-spacing:6px;color:rgba(0,180,216,0.3);text-transform:uppercase;margin-bottom:-4px">DOMAIN EXPANSION</div>
+  <div class="sec-lbl" style="margin-top:6px">Unlimited Void</div>
+  <div class="sec-title">Birthday Wishes</div>
+  <div class="sec-sub">— sealed within infinity —</div>
+  <div class="wish-grid" id="wishGrid"></div>
+</section>
+
+<div class="jjk-div"><span></span><em>✦ ∞ ✦</em><span></span></div>
+
+<!-- SURPRISE -->
+<section id="surprise" class="sec">
+  <div class="sec-lbl">Secret Technique</div>
+  <div class="sec-title">A Surprise</div>
+  <div class="sec-sub">— tap to reveal what lies within —</div>
+  <div class="surp-prev" id="surpPrev">
+    <img src="guggu3.jpg" alt="surprise">
+    <div class="surp-ov">
+      <div class="surp-ov-txt">Your portrait awaits...</div>
+      <div class="surp-ov-sub">∞ &nbsp; Tap to Open &nbsp; ∞</div>
+    </div>
+  </div>
+  <br>
+  <button class="surp-btn" id="surpBtn">✦ Open Portrait ✦</button>
+</section>
+
+<div class="jjk-div"><span></span><em>✦ 呪術廻戦 ✦</em><span></span></div>
+
+<!-- FINAL -->
+<section id="final">
+  <div class="final-bg"></div>
+  <div style="position:relative;z-index:2">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="final-sym">∞</div>
+  <div class="final-title">Happy Birthday!</div>
+  <div class="final-msg">May your life be as limitless as Gojo's Infinity.<br>You are the strongest in every room you enter.</div>
+  <div class="final-sig">∞ &nbsp; Guggu &nbsp; ∞</div>
+</section>
+
+<script>
+
+// ── GALLERY VIDEO CONTROLS ────────────────────────────────────────────────────
+const startTimes = {
+  gojoVid:      0,   // starts at 0:00
+  itadoriVid:   0,   // starts at 0:00
+  fushiguroVid: 0.5,   // starts at 0:02
+  nobaraVid:    1,   // starts at 0:00
+  sukunaVid:    0,   // starts at 0:00
+};
+
+document.querySelectorAll('.gal-cell[data-vid]').forEach(cell => {
+  const vid = document.getElementById(cell.dataset.vid);
+  if(!vid) return;
+
+  vid.load();
+  vid.addEventListener('loadedmetadata', () => {
+    vid.currentTime = startTimes[vid.id] ?? 0;
+  });
+
+  cell.addEventListener('click', () => {
+    vid.muted = true;
+    if(vid.paused){
+      vid.play().catch(()=>{});
+      cell.classList.add('vid-playing');
+    } else {
+      vid.pause();
+      vid.currentTime = startTimes[vid.id] ?? 0;
+      cell.classList.remove('vid-playing');
+    }
+  });
+
+  cell.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    vid.muted = true;
+    if(vid.paused){
+      vid.play().catch(()=>{});
+      cell.classList.add('vid-playing');
+    } else {
+      vid.pause();
+      vid.currentTime = startTimes[vid.id] ?? 0;
+      cell.classList.remove('vid-playing');
+    }
+  }, {passive: false});
+
+  vid.addEventListener('ended', () => {
+    cell.classList.remove('vid-playing');
+    vid.currentTime = startTimes[vid.id] ?? 0;
+  });
+});
+// ── CURSOR ───────────────────────────────────────────────────────────────────
+const cur=document.getElementById('cursor'),cd=document.getElementById('cursor-dot');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  cd.style.left=e.clientX+'px';cd.style.top=e.clientY+'px';
+});
+
+
+
+// ── STARS ─────────────────────────────────────────────────────────────────────
+const pc=document.getElementById('particles');
+for(let i=0;i<50;i++){
+  const s=document.createElement('div');s.className='star';
+  const sz=Math.random()*2.5+0.5;
+  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${Math.random()*5+2}s;animation-delay:${Math.random()*7}s`;
+  pc.appendChild(s);
+}
+
+// ── MUSIC BTN ─────────────────────────────────────────────────────────────────
+const bgm=document.getElementById('bgm');
+const btn=document.getElementById('musicBtn');
+let playing=false;
+btn.addEventListener('click',()=>{
+  playing=!playing;
+  playing ? bgm.play() : bgm.pause();
+  btn.textContent=playing?'◼':'♪';
+});
+
+// ── COUNTDOWN ─────────────────────────────────────────────────────────────────
+const bday=new Date(2010,3,7); // SET BIRTHDAY HERE
+const now=new Date();
+let age=now.getFullYear()-bday.getFullYear();
+if(now.getMonth()<bday.getMonth()||(now.getMonth()===bday.getMonth()&&now.getDate()<bday.getDate()))age--;
+const next=new Date(now.getFullYear(),bday.getMonth(),bday.getDate());
+if(next<now)next.setFullYear(now.getFullYear()+1);
+const diff=next-now;
+const days=Math.floor(diff/864e5),hrs=Math.floor((diff%864e5)/36e5),mins=Math.floor((diff%36e5)/6e4);
+const grid=document.getElementById('cdGrid');
+[{v:age,l:'Years'},{v:days,l:'Days Left'},{v:hrs,l:'Hours'},{v:mins,l:'Minutes'}].forEach(u=>{
+  const b=document.createElement('div');b.className='cd-box';
+  b.innerHTML=`<span class="cd-num">${String(u.v).padStart(2,'0')}</span><div class="cd-lbl">${u.l}</div>`;
+  grid.appendChild(b);
+});
+document.getElementById('cdNote').textContent=`${age} years of being absolutely unstoppable`;
+
+// ── TYPED MESSAGE ──────────────────────────────────────────────────────────────
+const msg=`Hey Guggu,
+
+This may not be the best birthday gift, but it's all I can do for now. I hope you appreciate it, even just a little.
+
+You deserve so much in this life keep going, keep growing, and never stop believing in yourself. 
+
+Don't mind those who bash you and don't want you around, just be yourself, be a hotdog ni Tiding. 
+
+Achieve more in your studies and I hope you achieve more in life.
+
+Happy Birthday again, Guggu! 🎉`;
+
+const msgEl=document.getElementById('typedMsg');
+const sigEl=document.getElementById('msgSig');
+const cursor=document.createElement('span');cursor.className='msg-cursor';
+msgEl.innerHTML='';msgEl.appendChild(cursor);
+let idx=0;
+const ti=setInterval(()=>{
+  if(idx<msg.length){
+    cursor.before(document.createTextNode(msg[idx]));
+    idx++;
+  }else{
+    clearInterval(ti);
+    cursor.remove();
+    sigEl.style.opacity='1';sigEl.style.transition='opacity 1s';
+  }
+},22);
+
+// ── WISHES ────────────────────────────────────────────────────────────────────
+const wishes=[
+  {n:'01',t:'The Strongest',x:'May you walk through every challenge like Gojo through cursed spirits — with absolute confidence, knowing nothing in this world can truly stop you.'},
+  {n:'02',t:'Infinite Joy',x:'May laughter be your constant companion this year. The kind that makes your stomach hurt and your eyes water — pure, unbothered, unlimited joy.'},
+  {n:'03',t:'Hollow Purple',x:'May all your dreams collide and create something beautiful — the way Red and Blue converge into Hollow Purple. Your greatest moments are still ahead.'},
+  {n:'04',t:'Unbreakable',x:"May you always have a shield of Infinity around you — protecting your peace, your heart, and your energy from anything that doesn't deserve you."},
+];
+const wg=document.getElementById('wishGrid');
+wishes.forEach((w,i)=>{
+  const c=document.createElement('div');c.className='wish-card';c.style.transitionDelay=(i*0.15)+'s';
+  c.innerHTML=`<div class="wish-num">${w.n}</div><div><div class="wish-title">${w.t}</div><div class="wish-text">${w.x}</div></div>`;
+  wg.appendChild(c);
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.15});
+document.querySelectorAll('.wish-card').forEach(c=>io.observe(c));
+
+// ── SURPRISE ──────────────────────────────────────────────────────────────────
+document.getElementById('surpBtn').addEventListener('click',()=>window.open('portrait_guggu.html','_blank'));
+document.getElementById('surpPrev').addEventListener('click',()=>window.open('portrait_guggu.html','_blank'));
+</script>
+</body>
+</html>
